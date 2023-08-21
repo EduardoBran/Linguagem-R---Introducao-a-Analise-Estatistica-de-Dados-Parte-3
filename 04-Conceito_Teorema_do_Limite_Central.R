@@ -5,6 +5,8 @@ setwd("C:/Users/Julia/Desktop/CienciaDeDados/1.Big-Data-Analytics-com-R-e-Micros
 getwd()
 
 
+library(dplyr)
+
 
 # O Teorema do Limite Central é um dos teoremas mais importantes da estatística, e é a essência da estatistica inferencial.
 
@@ -60,11 +62,9 @@ getwd()
 
 
 
+### Importância do Tamanho da Amostra no Teorema do Limite Central
 
-
-
-
-
+# - Á medida que aumenta o tamanho das nossas amostras, o erro padrão da média se torna menor, o que reduz o erro de amostragem.
 
 
 
