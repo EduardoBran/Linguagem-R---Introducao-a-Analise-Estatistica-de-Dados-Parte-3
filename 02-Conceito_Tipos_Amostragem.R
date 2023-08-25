@@ -68,7 +68,7 @@ getwd()
 
 # - Reamostragem é uma técnica estatística em que várias amostras são repetidamente extraídas da população.
 # - Quando extraímos uma amostragem da população, escolhemos um dos tipos de métodos de amostragem e então coletamos a amostra.
-#   Mas o que impede de fazer isso repetidas vezes? Como forma de ter uma amostra mais representativa possíve.
+#   Mas o que impede de fazer isso repetidas vezes? Como forma de ter uma amostra mais representativa possível.
 
 
 # - Um tipo específico de técnica de Reamostragem é conhecido como método Bootstrap.
