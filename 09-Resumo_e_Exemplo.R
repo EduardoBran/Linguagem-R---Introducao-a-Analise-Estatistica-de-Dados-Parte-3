@@ -101,3 +101,88 @@ library(dplyr)
 # de negócios e tomar decisões informadas com base em análises de dados.
 
 
+
+
+
+### Exemplo onde vamos unir todos os conceitos estudados até aqui:
+
+
+# - Uma fábrica de parafusos tem por especificação fabricá-los com diâmetro médio de 25mm.
+# - Para o controle de seu processo, coleta-se ao longo de um dia de operação, 35 amostras de tamanho 30 (n = 30).
+#   Logo temos 35 amostras e cada amostra de 30 parafusos, por isso 'n = 30'.
+
+
+# - A média das médias das amostras e o desvio padrão de um determinado dia acusaram:
+
+#  -> A média das médias das amostras = 25mm
+#  -> Desvio padrão                   = 1,5mm
+
+
+# - Até aqui os seguintes passos foram feitos.
+
+# - 1º passo: foi definir o problema de negócio e identificar qual é a população.
+# - 2º passo: utilizar umas das técnicas de amostragem e coleta as amostras.
+# - 3º passo: foi calculado a média o desvio padrão.
+# - 4º passo: iniciar o trabalho de estatística inferencial.
+
+
+# - Considerando um grau de confiança de 99%, calcule os valores críticos Z destra distribuição:
+
+#  -> Grau (Intervalo) de Confiança - 99%
+#  -> Nível de Significância (alfa) - 0,01
+#  -> Valor Crítico Z               - 2,575
+
+# Resposta:
+
+# x1 = 28,86mm
+# x2 = 21,14mm
+
+# Existe 99% de probabilidade do intervalo de 21,14 e 28,86mm conter a média populacional de diâmetro de parafuso.
+
+# A fábrica possui 99% de chance de produzir lotes de peças com médias entre 21,14mm e 28,86mm.
+
+
+
+
+# Definindo os parâmetros do problema
+media_populacional <- 25  # Média populacional de diâmetro de parafusos
+desvio_padrao <- 1.5       # Desvio padrão
+
+# Número de amostras e tamanho de cada amostra
+num_amostras <- 35
+tamanho_amostra <- 30
+
+# Cálculo da média das médias das amostras
+media_amostras <- media_populacional
+cat("Média das médias das amostras:", media_amostras, "mm\n")
+
+# Cálculo do desvio padrão das amostras
+desvio_padrao_amostras <- desvio_padrao / sqrt(tamanho_amostra)
+cat("Desvio padrão das amostras:", desvio_padrao_amostras, "mm\n\n")
+
+# Grau de confiança desejado
+grau_confianca <- 0.99
+nivel_significancia <- 1 - grau_confianca
+
+# Cálculo do valor crítico Z
+valor_critico_z <- qnorm(1 - nivel_significancia / 2)
+cat("Valor crítico Z:", valor_critico_z, "\n\n")
+
+# Cálculo dos limites do intervalo de confiança
+limite_inferior <- media_amostras - valor_critico_z * desvio_padrao_amostras
+limite_superior <- media_amostras + valor_critico_z * desvio_padrao_amostras
+
+# Resultado final
+cat("Intervalo de confiança:", limite_inferior, "a", limite_superior, "mm\n")
+cat("Existe", (1 - nivel_significancia) * 100, "% de probabilidade do intervalo de",
+    round(limite_inferior, 2), "e", round(limite_superior, 2),
+    "mm conter a média populacional de diâmetro de parafuso.")
+
+
+
+
+
+
+
+
+
