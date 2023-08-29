@@ -33,7 +33,7 @@ library(dplyr)
 
 
 
-## Exercício 1
+#### Exercício 1
 
 # - Um provedor quer validar se a média de uso de banda larga é maior, menor ou diferente de 1.8GB por mês.
 #   Quais seriam as Hipóteses Nula e Alternativa ?
@@ -77,6 +77,46 @@ library(dplyr)
 #   -> E assim com este cenário endendemos que a melhor forma talvez não seja usar a opção mais genérica.
 
 
+
+
+
+#### Exercício 2
+
+# - Uma empresa de alimentos alega que seu novo cereal possui uma média de calorias igual a 120 por porção. Um nutricionista suspeita que o cereal
+#   pode ter mais calorias do que o anunciado. Formule as hipóteses nula (H0) e alternativa (Ha) para testar essa suspeita.
+
+
+# - H0 = 120   (A média de calorias do novo cereal é igual a 120 por porção.)
+# - Ha > 120   (A média de calorias do novo cereal é maior do que 120 por porção.)
+
+
+
+
+
+#### Exercício 3
+
+# - Um fabricante de baterias alega que sua bateria dura em média 400 horas. Um consumidor desconfia dessa alegação e suspeita que a bateria pode 
+#   durar menos do que isso. Formule as hipóteses nula (H0) e alternativa (Ha) para testar essa suspeita.
+
+
+# - H0 = 400
+# - Ha < 400
+
+
+
+
+
+##### Exercício 4
+
+# - Uma empresa de streaming de vídeos afirma que seus usuários assistem em média 20 horas de conteúdo por semana. Um pesquisador deseja verificar
+#   se a média de horas assistidas é diferente da alegação da empresa. Formule as hipóteses nula (H0) e alternativa (Ha) para testar essa
+#   diferença.
+
+
+# - H0 = 20
+# - Ha > 20
+# - Ha < 20
+# - Ha ≠ 20
 
 
 
