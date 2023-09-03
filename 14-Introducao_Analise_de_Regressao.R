@@ -200,6 +200,45 @@ ggplot(dados, aes(x = Numero_de_comerciais_x, y = Numero_de_carros_vendidos_y)) 
 
 
 
+# --------------------------------------------------- Parte 3 ---------------------------------------------------
+
+# - O conjunto de técnicas de regressão é provavelmente um dos mais utilizados em análise de dados
+
+# - Existem diversos modelos de regressão:
+
+#  -> Regressão Linear Simples e Múltipla
+#  -> Regressão Logística Binária
+#  -> Regressão Logística Multinomial
+#  -> Regressão Poisson
+#  -> Regressão Binomial
+#  -> Regressão Ridge
+#  -> Regressão Lasso
+#  -> Regressão ElasticNet
+
+
+# - Por hora, vamos focar em definir o que é a REGRESSÃO LINEAR SIMPLES (e mais a frente vamos estudar e aplicar com R e Azure Machine Learning).
+
+
+# - Os modelos de regressão linear simples e múltipla são os mais utilizados em diversos campos do conhecimento.
+
+# - Exemplos de        : grupo de pesquisadores com interesse em estudar como as taxas de retorno de um ativo financeiro comportam-se em relação ao
+#   aplicação de         mercado, como um custo de uma empresa varia quando aumenta sua capacidade produtiva ou incrementa numero de horas, 
+# análise de regressão   como o estudo de o numero de quartos em um imóvel pode influenciar nos preços de venda)
+
+
+# - Análise de regressão é uma metodologia estatística que utiliza a relação entre duas ou mais variáveis quantitativas de tal forma que uma 
+#   variável possa ser predita a partir da outra.
+
+# - Análise de regressão é utilizada para se fazer a previsão de resultados. O caso mais simples de regressão é quando temos duas variáveis e a
+#   relação entre elas pode ser representada por uma linha reta.
+
+
+
+
+
+
+
+
 
 
 
