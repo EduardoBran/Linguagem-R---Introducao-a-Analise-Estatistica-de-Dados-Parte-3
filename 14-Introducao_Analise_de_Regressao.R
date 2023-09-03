@@ -237,6 +237,55 @@ ggplot(dados, aes(x = Numero_de_comerciais_x, y = Numero_de_carros_vendidos_y)) 
 
 
 
+# --------------------------------------------------- Parte 4 ---------------------------------------------------
+
+# - Para compreender ainda melhor conceito de regressão, vamos focar no Fenômeno da Regressão
+
+
+# - A partir de um gráfico scatterplot (grafico de dispersao) onde temos varios 'pontinhos' onde cada ponto é a interseção com o valor do
+#   eixo x (altura do pai) e eixo y (altura do filho).
+
+#   Então o que fazemos com a regressão?
+#   Basicamente desenhamos uma linha vermelha (que é na verdade um conjunto de previsões).
+#   Com isso vamos estabelecer uma fórmula matemática que partir dos dados do eixo x seremos capaz de prever dados do eixo y.
+#   Estas previsões estarão exatamente nesta linha vermelha (que é chamada de linha de regressão).
+
+#   Se a partir de agora eu colocar uma fórmula de altura de um pai qualquer, nós teremos a previsão sobre a possível altura do filho.
+
+#   E podemos utilizar esta analogia para qualquer outro exemplo onde queremos estudar a relação entre duas variáveis.
+
+#   E para encontrar esta formula matemática para fazer isto, nós dados históricos (ou seja, pegar os 'pontinhos pretos' que são os dados) de um
+#   dataset cujo  os dados já foram coletados, preparados, analisados e etc.
+
+#   E com isso podemos alimentar o modelo para o treinamento. O modelo aprender uma formula matemática e uma vez aprendida a fórmula,
+#   não precisaremos mais entregar ao modelo os dados de y. Entregamos os dados de x, preenchemos a fórmula e conseguimos as previsões dos dados.
+
+#   E assim descrevemos o que é Machine Learning, o que muda é a fórmula matemática.
+
+#   Em regressão o que queremos é encontrar a 'linha vermelha' que é dada através de uma fórmula matemática.
+
+
+
+### REGRESSÃO e CORRELAÇÃO são a mesma coisa ?
+
+#  -> Não.
+
+## REGRESSÃO
+
+# - Análise de regressão: prevê o valor médio de uma variável com base nos valores estabelecidos de uma ou mais variáveis.
+
+## CORRELAÇÃO
+
+# - Análise de correlação: tem como objetivo medir o grau de associação linear entre duas variáveis.
+
+
+#  -> Ou seja, usamos a correlação para medir o grau de relação entre duas variáveis e depois usamos regressão para estudar o relacionamento
+#     entre elas.
+
+
+# - Portando durante o processo de análise de regressão, em algum momento iremos calcular a correlação para compreender como as variáveis estão
+#   relacionadas.
+
 
 
 
