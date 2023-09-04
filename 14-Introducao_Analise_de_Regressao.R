@@ -325,7 +325,3 @@ ggplot(dados, aes(x = Numero_de_comerciais_x, y = Numero_de_carros_vendidos_y)) 
 
 
 
-
-
-
-
