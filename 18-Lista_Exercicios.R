@@ -20,6 +20,7 @@ library('nycflights13')
 ### EXERCÍCIO
 
 View(flights)
+?flights
 
 
 ### Definindo o Problema de Negócio
@@ -38,6 +39,16 @@ View(flights)
 # - Os dados devem ser extraídos do dataset flights para construir o dataset pop_data.
 # - Vamos considerar este dataset como sendo nossa população de voos.
 
+pop_data <- 
+  flights %>% 
+  select(carrier, arr_delay)
+
+pop_data <- 
+  pop_data %>% 
+  filter(carrier %in% c('UA', 'DL')) %>% 
+  arrange(carrier)
+
+View(pop_data)
 
 
 
@@ -45,10 +56,26 @@ View(flights)
 
 # Exercício 2 
 
-# - Crie duas amostras de 1000 observações cada uma a partir do  dataset pop_data apenas com dados da companhia DL para amostra 1 e
+# - Crie duas amostras de 1000 observações cada uma a partir do dataset pop_data apenas com dados da companhia DL para amostra 1 e
 #   apenas dados da companhia UA na amostra 2
 
 # Dica: inclua uma coluna chamada sample_id preenchida com número 1 para a primeira amostra e 2 para a segunda amostra
+
+amostra_1_dl <- 
+  pop_data %>% 
+  filter(carrier == 'DL') %>% 
+  sample_n(1000, replace = FALSE) %>% 
+  mutate(sample_id = 1)
+
+View(amostra_1_dl)
+
+amostra_2_ua <- 
+  pop_data %>% 
+  filter(carrier == 'UA') %>% 
+  sample_n(1000, replace = FALSE) %>% 
+  mutate(sample_id = 2)
+
+View(amostra_2_ua)
 
 
 
@@ -58,6 +85,9 @@ View(flights)
 
 # - Crie um dataset contendo os dados das 2 amostras criadas no item anterior. 
 
+dados <- bind_rows(amostra_1_dl, amostra_2_ua)
+
+View(dados)
 
 
 
