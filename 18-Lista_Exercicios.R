@@ -46,7 +46,8 @@ pop_data <-
 pop_data <- 
   pop_data %>% 
   filter(carrier %in% c('UA', 'DL')) %>% 
-  arrange(carrier)
+  arrange(carrier) %>% 
+  na.omit(pop_data)
 
 View(pop_data)
 
@@ -116,15 +117,25 @@ View(dados)
 #     Como isso é apenas uma estimativa, é chamado de erro padrão. A condição para usar isso como uma estimativa é que o tamanho da amostra n é 
 #     maior que 30 (dado pelo teorema do limite central) e atende a condição de independência n <= 10% do tamanho da população.
 
-# Erro padrão
-erro_padrao_amostra1 = sd(amostra1$arr_delay) / sqrt(nrow(amostra1))
 
-# Limites inferior e superior
-# 1.96 é o valor de z score para 95% de confiança
+# Calculando Erro padrão
+
+erro_padrao_amostra1 <- sd(amostra_1_dl$arr_delay) / sqrt(nrow(amostra_1_dl))
+erro_padrao_amostra1
 
 
-# Intervalo de confiança
+# Calculando Limites inferior e superior (1.96 é o valor de z score para 95% de confiança)
 
+limite_inferior = mean(amostra_1_dl$arr_delay) - 1.96 * erro_padrao_amostra1  
+limite_superior = mean(amostra_1_dl$arr_delay) + 1.96 * erro_padrao_amostra1
+
+
+# Calculando Intervalo de confiança
+
+ic_1 = c(limite_inferior, limite_superior)
+
+mean(amostra_1_dl$arr_delay)
+ic_1
 
 
 
@@ -134,6 +145,14 @@ erro_padrao_amostra1 = sd(amostra1$arr_delay) / sqrt(nrow(amostra1))
 
 # - Calcule o intervalo de confiança (95%) da amostra2
 
+erro_padrao_amostra2 <- sd(amostra_2_ua$arr_delay) / sqrt(nrow(amostra_2_ua))
+erro_padrao_amostra2
+
+limite_inferior = mean(amostra_2_ua$arr_delay) - 1.96 * erro_padrao_amostra2
+limite_superior = mean(amostra_2_ua$arr_delay) + 1.96 * erro_padrao_amostra2
+
+ic_2 = c(limite_inferior, limite_superior)
+ic_2
 
 
 
@@ -144,6 +163,21 @@ erro_padrao_amostra1 = sd(amostra1$arr_delay) / sqrt(nrow(amostra1))
 # - Crie um plot Visualizando os intervalos de confiança criados nos itens anteriores
 #   Dica: Use o geom_point() e geom_errorbar() do pacote ggplot2
 
+# Dataframe com os intervalos de confiança
+intervalos_confianca <- data.frame(
+  Amostra = c("Amostra 1", "Amostra 2"),
+  Limite_Inferior = c(ic_1[1], ic_2[1]),
+  Limite_Superior = c(ic_1[2], ic_2[2])
+) 
+
+# Criar o gráfico
+ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Superior) / 2)) +
+  geom_point(color = "red", size = 3) +
+  geom_errorbar(aes(ymin = Limite_Inferior, ymax = Limite_Superior), width = 0.2) +
+  labs(title = "Intervalo de Confiança (95%) das Amostras",
+       y = "Média dos Atrasos nos Voos de Chegada",
+       x = "Amostra") +
+  theme_minimal()
 
 
 
