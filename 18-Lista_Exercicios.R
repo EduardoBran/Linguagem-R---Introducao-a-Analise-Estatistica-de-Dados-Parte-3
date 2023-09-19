@@ -96,9 +96,10 @@ View(dados)
 
 # Exercício 4
 
+
 # - Calcule o intervalo de confiança (95%) da amostra1
 
-# Usamos a fórmula: erro_padrao_amostra1 = sd(amostra1$arr_delay) / sqrt(nrow(amostra1))
+# Usaremos a fórmula: erro_padrao_amostra1 = sd(amostra1$arr_delay) / sqrt(nrow(amostra1))
 
 #  -> Esta fórmula é usada para calcular o desvio padrão de uma distribuição da média amostral (de um grande número de amostras de uma população).
 #     Em outras palavras, só é aplicável quando você está procurando o desvio padrão de médias calculadas a partir de uma amostra de tamanho n𝑛,
@@ -163,14 +164,19 @@ ic_2
 # - Crie um plot Visualizando os intervalos de confiança criados nos itens anteriores
 #   Dica: Use o geom_point() e geom_errorbar() do pacote ggplot2
 
-# Dataframe com os intervalos de confiança
+
+# Criando dataframe com os intervalos de confiança
+
 intervalos_confianca <- data.frame(
   Amostra = c("Amostra 1", "Amostra 2"),
   Limite_Inferior = c(ic_1[1], ic_2[1]),
   Limite_Superior = c(ic_1[2], ic_2[2])
-) 
+)
+intervalos_confianca
 
-# Criar o gráfico
+
+# Criando o gráfico
+
 ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Superior) / 2)) +
   geom_point(color = "red", size = 3) +
   geom_errorbar(aes(ymin = Limite_Inferior, ymax = Limite_Superior), width = 0.2) +
@@ -183,10 +189,14 @@ ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Supe
 
 
 
+
 # Exercício 7
 
 # - Podemos dizer que muito provavelmente, as amostras vieram da mesma população? 
 #   Por que?
+
+
+# Sim. A maior parte dos dados reside no mesmo intervalo de confiança nas duas amostras.
 
 
 
