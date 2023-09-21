@@ -131,11 +131,11 @@ limite_inferior = mean(amostra_1_dl$arr_delay) - 1.96 * erro_padrao_amostra1
 limite_superior = mean(amostra_1_dl$arr_delay) + 1.96 * erro_padrao_amostra1
 
 
-# Calculando Intervalo de confiança
-
-ic_1 = c(limite_inferior, limite_superior)
+# Calculando a média e o intervalo de confiança
 
 mean(amostra_1_dl$arr_delay)
+
+ic_1 = c(limite_inferior, limite_superior)
 ic_1
 
 
@@ -216,15 +216,47 @@ ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Supe
 
 # Cria as amostras das duas companias
 
+amostra_1_dl <- 
+  pop_data %>% 
+  filter(carrier == 'DL') %>% 
+  sample_n(1000, replace = FALSE) %>% 
+  mutate(sample_id = 1)
+
+amostra_2_ua <- 
+  pop_data %>% 
+  filter(carrier == 'UA') %>% 
+  sample_n(1000, replace = FALSE) %>% 
+  mutate(sample_id = 2)
 
 
 # Calcula erro padrão / média / limites inferior e superior da compania DL
 
+erro_padrao_amostra_1_dl <- sd(amostra_1_dl$arr_delay) / sqrt(nrow(amostra_1_dl))
+erro_padrao_amostra_1_dl
 
+media_amostra_1_dl <- mean(amostra_1_dl$arr_delay)
+media_amostra_1_dl
+
+limite_inferior_dl <- mean(amostra_1_dl$arr_delay) - 1.96 * erro_padrao_amostra_1_dl
+limite_superior_dl <- mean(amostra_1_dl$arr_delay) + 1.96 * erro_padrao_amostra_1_dl
+
+ic_dl <- c(limite_inferior_dl, limite_superior_dl)
+ic_dl
 
 
 # Calcula erro padrão / média / limites inferior e superior da compania UA
 
+erro_padrao_amostra_2_ua <- sd(amostra_2_ua$arr_delay) / sqrt(nrow(amostra_2_ua))
+erro_padrao_amostra_2_ua
+
+media_amostra_2_ua <- mean(amostra_2_ua$arr_delay)
+media_amostra_2_ua
+
+limite_inferior_ua <- mean(amostra_2_ua$arr_delay) - 1.96 * erro_padrao_amostra_2_ua
+limite_superior_ua <- mean(amostra_2_ua$arr_delay) + 1.96 * erro_padrao_amostra_2_ua
+
+ic_ua <- c(limite_inferior_ua, limite_superior_ua)
+ic_ua
 
 
 
@@ -232,3 +264,8 @@ ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Supe
 
 
 
+# Intervalo 90% -> 1.645
+
+# Intervalo 95% -> 1.96
+
+# Intervalo 99% -> 2.576
