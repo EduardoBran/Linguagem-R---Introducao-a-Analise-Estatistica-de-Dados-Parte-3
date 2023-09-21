@@ -210,6 +210,25 @@ ggplot(intervalos_confianca, aes(x = Amostra, y = (Limite_Inferior + Limite_Supe
 #  -> H0 e H1 devem ser mutuamente exclusivas.
 
 
+# H0 - Não há diferença significativa entre os atrasos. (diferença das médias de atraso = 0)
+# H1 - Voos da Delta (DL) atrasam mais.                 (diferença das médias de atraso > 0)
+
+
+# Cria as amostras das duas companias
+
+
+
+# Calcula erro padrão / média / limites inferior e superior da compania DL
+
+
+
+
+# Calcula erro padrão / média / limites inferior e superior da compania UA
+
+
+
+
+
 
 
 
