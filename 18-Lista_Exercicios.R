@@ -229,6 +229,12 @@ amostra_2_ua <-
   mutate(sample_id = 2)
 
 
+
+
+# Os cálculos  para erro padrão, média e limites são úteis quando você deseja entender e interpretar os resultados do teste t, mas eles não são 
+# diretamente usados na função t.test porque a função já realiza esses cálculos internamente. No entanto, é uma prática comum calcular essas
+# estatísticas antecipadamente para entender os dados e interpretar os resultados do teste t de forma mais completa.
+
 # Calcula erro padrão / média / limites inferior e superior da compania DL
 
 erro_padrao_amostra_1_dl <- sd(amostra_1_dl$arr_delay) / sqrt(nrow(amostra_1_dl))
@@ -257,6 +263,20 @@ limite_superior_ua <- mean(amostra_2_ua$arr_delay) + 1.96 * erro_padrao_amostra_
 
 ic_ua <- c(limite_inferior_ua, limite_superior_ua)
 ic_ua
+
+t.test(amostra_1_dl$arr_delay, amostra_2_ua$arr_delay, alternative="greater")    # valor-p = 0.9537
+
+# Regra
+# Baixo valor p: forte evidência empírica contra h0
+# Alto valor p: pouca ou nenhuma evidência empírica contra h0
+
+# Falhamos em rejeitar a hipótese nula, pois p-valor é maior que o nível de significância
+# Isso que dizer que há uma probabilidade alta de não haver diferença significativa entre os atrasos.
+# Para os nossos dados, não há evidência estatística de que a DL atrase mais que a UA.
+
+
+
+
 
 
 
