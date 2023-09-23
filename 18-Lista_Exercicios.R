@@ -23,7 +23,7 @@ View(flights)
 ?flights
 
 
-### Definindo o Problema de Negócio
+### Definindo o Problema de Negócio 
 
 # - Criar um teste de hipótese para verificar se os voos da Delta Airlines (DL) atrasam mais do que os voos da UA (United Airlines).
 
