@@ -264,6 +264,9 @@ limite_superior_ua <- mean(amostra_2_ua$arr_delay) + 1.96 * erro_padrao_amostra_
 ic_ua <- c(limite_inferior_ua, limite_superior_ua)
 ic_ua
 
+
+# calcula o teste t
+
 t.test(amostra_1_dl$arr_delay, amostra_2_ua$arr_delay, alternative="greater")    # valor-p = 0.9537
 
 # Regra

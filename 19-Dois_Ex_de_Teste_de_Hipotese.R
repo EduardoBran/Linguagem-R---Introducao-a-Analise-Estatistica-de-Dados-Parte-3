@@ -162,12 +162,10 @@ print(resultado_teste_welch)   # t = 4.7191, df = 12.956, p-value = 0.0004048
 
 
 
-View(pageviews)
 
 
 
-
-#### Exercício 2 (Segunda Abordagem - Comparação de Proporções):
+#### Exercício 2 (Segunda Abordagem - Comparação de Proporções - Não é obrigatório realizar as validações de shapiro-wilk ou test f):
   
 #  Problema de Negócio: Você é um analista de marketing e deseja avaliar se duas campanhas publicitárias, A e B, têm taxas de conversão 
 #                       significativamente diferentes em um site de comércio eletrônico.
@@ -192,13 +190,6 @@ View(pageviews)
 
 View(ecommerce_data)
 
-
-
-resultado_teste_f <- var.test(data = ecommerce_data, Campanha ~ Conversao)
-
-resultado_teste_f   
-
-
 grupo_a <- 
   ecommerce_data %>% 
   filter(Campanha == "A") %>% 
@@ -220,9 +211,6 @@ t.test(grupo_a$Conversao, grupo_b$Conversao, alternative = "two.sided")  # p-val
 # - Valor-p maior que o nível de significânica (0.05)
 # - Isso que dizer que há uma probabilidade alta de não haver diferença significativa na taxa de conversão entre as campanhas A e B.
 
-
-
-
 # EXPLICAÇÃO
 
 # - Ao usar alternative = "two.sided", você está realizando um teste de hipótese bidirecional que considera diferenças significativas em ambas as
@@ -235,12 +223,14 @@ t.test(grupo_a$Conversao, grupo_b$Conversao, alternative = "two.sided")  # p-val
 
 
 
+
+
 #### Exercício 3
 
 # - Problema de Negócio: Você trabalha em uma empresa de comércio eletrônico e deseja saber se a média de tempo que os clientes passam no seu
 #   site difere significativamente em dias úteis (segunda a sexta-feira) em comparação com os fins de semana (sábado e domingo).
 
-# Dados Disponíveis: Utilize o dataframe "pageviews" do R, que contém informações sobre o tempo gasto por visitantes no site da empresa.
+# Dados Disponíveis: Utilize o dataframe "pageviews" criado acima, que contém informações sobre o tempo gasto por visitantes no site da empresa.
 #                    O dataframe inclui a coluna "tempo_gasto" (tempo em minutos) e a coluna "dia_semana" (que indica se é um dia útil ou fim de
 #                    semana).
 
@@ -260,9 +250,76 @@ t.test(grupo_a$Conversao, grupo_b$Conversao, alternative = "two.sided")  # p-val
 
 # Dica: Lembre-se de realizar as validações necessárias, como testes de normalidade ou verificação da igualdade de variâncias, se aplicável.
 
+head(pageviews)
+
+
+## Validações com qqPlot, Shapiro-Wilk e teste f
+
+grupo_diasuteis <- pageviews$Dia_Semana == "Dia Útil"
+grupo_fds <- pageviews$Dia_Semana == "Fim de Semana"
+
+qqPlot(pageviews$Tempo_Gasto[grupo_diasuteis])
+qqPlot(pageviews$Tempo_Gasto[grupo_fds])
+
+shapiro.test(pageviews$Tempo_Gasto[grupo_diasuteis]) # valor-p = 0.0882 (ou seja, maior que 0.05)
+shapiro.test(pageviews$Tempo_Gasto[grupo_fds])       # valor-p = 0.6886 (ou seja, maior que 0.05)
+
+resultado_teste_f <- var.test(data = pageviews, Tempo_Gasto ~ Dia_Semana)
+resultado_teste_f # p-value = 0.5356 (ou seja, maior que 0.05)
+
+
+# teste t
+
+resultado_teste_t <- t.test(data = pageviews, Tempo_Gasto ~ Dia_Semana, var.equal = TRUE)
+resultado_teste_t                 # t = 0.0022393, df = 98, p-value = 0.9982
+
+
+# Análise Final
+
+# - O valor-p do teste é de 0.9982, logo, maior que 0.05. Falhamos em rejeitar a H0.
+# - Podemos concluir que a média de tempo gasto nos dias úteis é igual à média de tempo gasto nos fins de semana.
 
 
 
+
+
+
+
+
+
+
+# -> Para um teste de comparação de proporções (por exemplo, comparando a taxa de conversão entre dois grupos), você não precisa realizar as
+#    mesmas validações que são comuns em testes t de comparação de médias (por exemplo, teste t para médias de duas amostras). As validações 
+#    específicas que você deve considerar dependem das características dos seus dados e do tipo de teste que está realizando.
+
+# Aqui estão algumas considerações comuns ao realizar um teste de comparação de proporções:
+  
+#  -> Origem dos Dados: Verifique a fonte dos seus dados e certifique-se de que eles sejam representativos da população ou do contexto que você 
+#     deseja estudar. Certifique-se também de que os dados foram coletados de maneira confiável e consistente.
+
+#  -> Tratamento dos Dados: Certifique-se de que seus dados estejam limpos e prontos para análise. Isso pode incluir lidar com valores ausentes,
+#     dados duplicados ou outliers, se aplicável.
+
+#  -> Tamanho da Amostra: Verifique se você tem um tamanho de amostra adequado para realizar o teste. Em geral, um tamanho de amostra maior
+#     aumentará o poder estatístico do teste, permitindo detectar diferenças menores.
+
+#  -> Distribuição das Proporções: Embora não seja estritamente necessário para um teste de comparação de proporções, algumas pessoas optam por 
+#     verificar se a distribuição das proporções se assemelha a uma distribuição normal. Isso pode ser feito visualmente com um histograma ou 
+#     quantil-quantil (Q-Q) plot, ou por meio de um teste de normalidade como o teste de Shapiro-Wilk. No entanto, essa verificação não é tão 
+#     crítica quanto em testes de médias.
+
+#  -> Independência: É importante que as observações em cada grupo sejam independentes umas das outras. Se houver dependência entre as observações,
+#     os resultados do teste podem não ser confiáveis.
+
+#  -> Formulação de Hipóteses: Certifique-se de formular corretamente as hipóteses nula (H0) e alternativa (H1) de acordo com a pergunta de
+#     pesquisa que você deseja responder. As hipóteses devem ser claras e mutuamente exclusivas.
+
+#  -> Escolha do Teste Estatístico: Escolha o teste de comparação de proporções apropriado com base na natureza dos seus dados e nas hipóteses que
+#     você está testando. O teste t de diferença de proporções (ou teste z para proporções) é comumente usado para esse tipo de comparação.
+
+#  -> Interpretação dos Resultados: Após realizar o teste, interprete os resultados corretamente e considere o valor-p em relação ao nível de
+#     significância escolhido. Lembre-se de que um valor-p menor que o nível de significância (geralmente 0,05) sugere evidências para rejeitar a
+#     hipótese nula.
 
 
 
