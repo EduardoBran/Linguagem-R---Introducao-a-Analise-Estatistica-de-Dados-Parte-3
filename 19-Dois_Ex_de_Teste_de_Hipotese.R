@@ -145,17 +145,17 @@ resultado_teste_f                                            #  valor-p = 0.0118
 
 # Realiza um teste t de Welch para comparar as médias dos dois grupos, (se o valor-p for maior que 0.05, significa falhar em rejeitar a H0)
 
-resultado_teste_welch <- t.test(mpg ~ cyl, data = dados, var.equal = FALSE)
+resultado_teste_welch <- t.test(data = dados, mpg ~ cyl, var.equal = FALSE)
 
 print(resultado_teste_welch)   # t = 4.7191, df = 12.956, p-value = 0.0004048
 
 
 ## CONCLUSÃO
 
-# - O teste t de Welch foi realizado para comparar as médias de consumo de combustível (mpg) entre dois grupos de carros: aqueles com 4 cilindros
-#   e aqueles com 6 cilindros. O valor-p obtido é muito baixo (0.0004048), o que indica que há evidências estatísticas significativas de diferença
-#   nas médias entre os dois grupos. Como o valor-p é menor que um nível de significância comum, como 0.05, rejeitamos a hipótese nula (H0), que 
-#   afirma que não há diferença significativa nas médias.
+# - O teste t de Welch (var.equal = FALSE) foi realizado para comparar as médias de consumo de combustível (mpg) entre dois grupos de carros:
+#   aqueles com 4 cilindros e aqueles com 6 cilindros. O valor-p obtido é muito baixo (0.0004048), o que indica que há evidências estatísticas
+#   significativas de diferença nas médias entre os dois grupos. Como o valor-p é menor que um nível de significância comum, como 0.05, rejeitamos
+#   a hipótese nula (H0), que afirma que não há diferença significativa nas médias.
 
 # - Portanto, com base neste resultado, podemos concluir que há uma diferença significativa no consumo médio de combustível entre carros com 4 
 #   cilindros e carros com 6 cilindros.
@@ -285,6 +285,107 @@ resultado_teste_t                 # t = 0.0022393, df = 98, p-value = 0.9982
 
 
 
+#### Exercício 4 (Teste de Hipótese para Média - DataFrame "iris"):
+  
+# - Problema de Negócio: Você trabalha em um laboratório de pesquisa botânica e deseja determinar se o comprimento das sépalas (sepal length) da
+#   espécie "setosa" é significativamente diferente da espécie "versicolor" na base de dados "iris".
+
+# Carregue o dataframe "iris" no ambiente de trabalho do R.
+
+# - Divida o dataframe em dois grupos: um grupo para a espécie "setosa" e outro grupo para a espécie "versicolor".
+
+# - Formule as hipóteses nula (H0) e alternativa (H1) para este teste de hipótese.
+
+# - Execute um teste t para comparar as médias dos comprimentos das sépalas entre as duas espécies.
+
+# - Interprete os resultados do teste, incluindo o valor-p, e conclua se há evidências estatísticas para suportar a alegação de que os comprimentos
+#   das sépalas das espécies "setosa" e "versicolor" são significativamente diferentes.
+
+# Lembre-se de escolher um nível de significância apropriado para o seu teste (por exemplo, α = 0.05). Utilize o dataframe "iris" para realizar o teste de hipótese e tirar suas conclusões.
+
+head(iris)
+
+
+# H0 -> o comprimento das sépalas (sepal length) da espécie "setosa" é igual ao da espécie "versicolor"
+# H1 -> o comprimento das sépalas (sepal length) da espécie "setosa" é significativamente diferente da espécie "versicolor"
+
+dados <-
+  iris %>% 
+  na.omit(iris) %>% 
+  filter(Species %in% c('setosa', 'versicolor')) %>% 
+  select(Sepal.Length, Species)
+head(dados)
+
+
+## Validações com qqPlot, Shapiro-Wilk e teste f
+
+iris_setosa <- dados$Species == "setosa"
+iris_versicolor <- dados$Species == "versicolor"
+
+qqPlot(dados$Sepal.Length[iris_setosa])
+qqPlot(dados$Sepal.Length[iris_versicolor])
+
+shapiro.test(dados$Sepal.Length[iris_setosa])     # valor-p = 0.4595 (ou seja, maior que 0.05)
+shapiro.test(dados$Sepal.Length[iris_versicolor]) # valor-p = 0.4647 (ou seja, maior que 0.05)
+
+var.test(data = dados, Sepal.Length ~ Species)    # p-value = 0.008657 (ou seja, menor que 0.05)
+
+
+# teste t de Welch 
+
+t.test(data = dados, Sepal.Length ~ Species, var.equal = FALSE) # p-value < 2.2e-16 (ou seja, menor que 0.05)
+
+
+# Análise Final
+
+# - O valor-p do teste é de p-value < 2.2e-16, logo, menor que 0.05. Rejeitamos a H0.
+# - Podemos concluir que o comprimento das sépalas (sepal length) da espécie "setosa" é significativamente diferente da espécie "versicolor"
+
+
+
+
+
+
+
+View(dados)
+
+
+dados_media_setosa <- 
+  dados %>% 
+  group_by(Species) %>% 
+  summarise(media = mean(Sepal.Length))
+
+dados_media_setosa
+
+
+sono_df_group_by2 <- 
+  sono_df %>% 
+  group_by(cidade) %>%                               # agrupando  por cidade
+  summarise(media_sono_total = mean(sono_total),
+            min_sono_total = min(sono_total),
+            max_sono_total = max(sono_total))   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -327,5 +428,32 @@ resultado_teste_t                 # t = 0.0022393, df = 98, p-value = 0.9982
 
 
 
-# - Lembre-se de realizar todas as etapas necessárias, incluindo a formulação das hipóteses, a escolha do nível de significância e a 
-#   interpretação dos resultados.
+# Por que utilizar o teste de hipótese quando podemos ver as médias sendo diferente com o codigo acima ? 
+# Para que e quando o teste de hipótese é realmente necessário ?
+
+# Ótima pergunta! O cálculo das médias amostrais e sua comparação direta, como você fez com o código acima, pode ser uma maneira inicial de 
+# avaliar se há uma diferença aparente entre os grupos. No entanto, existem várias razões pelas quais o teste de hipótese é necessário, mesmo
+# quando as médias amostrais parecem diferentes:
+  
+# - Variabilidade Natural: Mesmo que as médias amostrais sejam diferentes, isso pode ser devido à variabilidade natural dos dados. O teste de
+#   hipótese ajuda a determinar se essa diferença é estatisticamente significativa ou se pode ser explicada pela aleatoriedade.
+
+# - Tamanho da Amostra: A diferença entre as médias pode ser influenciada pelo tamanho da amostra. Com amostras maiores, pequenas diferenças nas 
+#   médias podem se tornar estatisticamente significativas, mesmo que não sejam praticamente relevantes.
+
+# - Erro Tipo I e Erro Tipo II: O teste de hipótese leva em consideração os erros tipo I (rejeitar uma hipótese nula verdadeira) e 
+#   tipo II (aceitar uma hipótese nula falsa). Ele ajuda a controlar o nível de significância para tomar uma decisão com base em evidências
+#   estatísticas sólidas.
+
+# - Generalização: O teste de hipótese permite generalizar os resultados da amostra para a população maior da qual a amostra foi retirada. Ele
+#   fornece uma base estatística para fazer afirmações sobre a população com base em uma amostra.
+
+# - Contexto Científico: Em muitos contextos científicos e de negócios, é importante ter um rigor estatístico sólido para tomar decisões ou fazer
+#   afirmações. O teste de hipótese fornece esse rigor.
+
+# Portanto, embora as médias amostrais possam dar uma ideia inicial, o teste de hipótese é uma abordagem sistemática e estatisticamente rigorosa
+# para avaliar se uma diferença observada é estatisticamente significativa e não pode ser explicada apenas pela aleatoriedade ou pela 
+# variabilidade natural dos dados. É uma ferramenta essencial para tomar decisões baseadas em evidências sólidas em vez de apenas impressões 
+# visuais ou diferenças aparentes.
+
+

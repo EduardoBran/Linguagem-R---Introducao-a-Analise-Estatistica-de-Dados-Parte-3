@@ -66,7 +66,7 @@ amostra_1_dl <-
   pop_data %>% 
   filter(carrier == 'DL') %>% 
   sample_n(1000, replace = FALSE) %>% 
-  mutate(sample_id = 1)
+  mutate(sample_id = '1')
 
 View(amostra_1_dl)
 
@@ -74,7 +74,7 @@ amostra_2_ua <-
   pop_data %>% 
   filter(carrier == 'UA') %>% 
   sample_n(1000, replace = FALSE) %>% 
-  mutate(sample_id = 2)
+  mutate(sample_id = '2')
 
 View(amostra_2_ua)
 
@@ -230,6 +230,20 @@ amostra_2_ua <-
 
 
 
+## Validações com qqPlot, Shapiro-Wilk e teste f
+
+dados <- bind_rows(amostra_1_dl, amostra_2_ua)
+head(dados)
+
+dados_dl <- dados$carrier == "DL"
+dados_ua <- dados$carrier == "UA"
+
+shapiro.test(dados$arr_delay[dados_dl]) # valor-p = 2.2e-16 (menor que 0.05)
+shapiro.test(dados$arr_delay[dados_ua]) # valor-p = 2.2e-16 (menor que 0.05)
+
+var.test(data = dados, arr_delay ~ carrier) # p-value = 0.8396 (maior que 0.05)
+
+
 
 # Os cálculos  para erro padrão, média e limites são úteis quando você deseja entender e interpretar os resultados do teste t, mas eles não são 
 # diretamente usados na função t.test porque a função já realiza esses cálculos internamente. No entanto, é uma prática comum calcular essas
@@ -277,6 +291,12 @@ t.test(amostra_1_dl$arr_delay, amostra_2_ua$arr_delay, alternative="greater")   
 # Isso que dizer que há uma probabilidade alta de não haver diferença significativa entre os atrasos.
 # Para os nossos dados, não há evidência estatística de que a DL atrase mais que a UA.
 
+
+# -> opção alternative="greater", indica que você está testando se a média dos atrasos de chegada da Delta Airlines (DL) é estatisticamente maior
+#    do que a da United Airlines (UA)
+
+# -> opção alternative="two.sided", indica que você está  interessado em saber se há diferença significativa em qualquer direção (ou seja, se 
+#    as médias são diferentes, seja maior ou menor)
 
 
 
